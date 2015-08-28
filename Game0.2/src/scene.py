@@ -4,13 +4,15 @@ import constants
 
 from object_class import Thing
 from player import Player
+from phone_menu import open_phone
 
 
 class Map():
 	wall_list = None
 	layer_list = None
+	object_list = None
+	npc_list = None
 	
-	world_shift = 0
 	map_num = 0
 	map_folder = ""
 	bg_shift = 0
@@ -20,6 +22,9 @@ class Map():
 	player_y = 0
 	main_shift = 0
 	go = 0
+	is_collide_r = False
+	is_collide_l = False
+	
 	###
 	"""
 	Break it up into layers -
@@ -43,6 +48,8 @@ class Map():
 	def __init__(self,map_num):
 
 		self.wall_list = pygame.sprite.Group()
+		self.object_list = pygame.sprite.Group()
+		self.npc_list = pygame.sprite.Group()
 		self.layer_list = pygame.sprite.LayeredUpdates()
 		
 		self.map_num = map_num
@@ -55,6 +62,7 @@ class Map():
 		map_length = int(lines[0])
 		self.bg_shift = int(lines[1])
 		self.bg_shift_speed = int(lines[2])
+		self.world_shift = 305 - self.bg_shift
 				
 		self.background = pygame.image.load(self.map_folder+"/background.png").convert()
 		self.front_image = Thing((self.map_folder+"/front_image.png",0,0,map_length,480))
@@ -78,32 +86,50 @@ class Map():
 		self.main_shift = int(lines[10])
 		self.player_y = int(lines[11])
 		
-		self.wall_list.add(self.back_wall)
-		
-		
 		self.layer_list.add(self.back_image1,layer=0)
 		self.layer_list.add(self.back_image2,layer=1)
 		self.layer_list.add(self.back_wall,layer=2)
 		self.layer_list.add(self.ground,layer=3)
 		self.layer_list.add(self.front_image,layer=5)
 		
+		text_file = open(self.map_folder+"/wall_list.txt", "r")
+		lines = text_file.read().split('\n')
+		text_file.close()
+		y_loc = 264
+		for line in lines:
+			walls = line.split(',')
+			for wall in walls:
+				new_wall = Thing((self.map_folder+"/wall_collide.png",0,0,5,5))
+				new_wall.rect.x = int(wall)+self.bg_shift
+				new_wall.rect.y = y_loc
+				self.wall_list.add(new_wall)
+			y_loc += 5
+		
 
 	# Update everything on this level
-	def update(self):
+	def update(self,player):
 		""" Update everything in this level."""
 		self.layer_list.update()
+		self.wall_list.update()
+		self.can_shift(player,self.wall_list)
+		self.can_shift(player,self.object_list)
+		self.can_shift(player,self.npc_list)
 		
 		self.bg_shift += self.go*self.bg_shift_speed
 		self.back_image1.rect.x += self.go*self.back1_shift
 		self.back_image2.rect.x += self.go*self.back2_shift
 		
 		self.ground.rect.x +=self.go*self.main_shift
-			
+		self.back_wall.rect.x += self.go*self.main_shift
 		self.front_image.rect.x += self.go*self.main_shift
 
 		# Go through all the sprite lists and shift
 		for wall in self.wall_list:
 			wall.rect.x += self.go*self.main_shift
+		for object in self.object_list:
+			object.rect.x += self.go*self.main_shift
+		for npc in self.npc_list:
+			npc.rect.x += self.go*self.main_shift
 		
 
 	def draw(self, screen, player):
@@ -114,9 +140,10 @@ class Map():
 		screen.blit(self.background,(self.bg_shift,0))
 
 		# Draw all the sprite lists that we have
-		#self.wall_list.draw(screen)
+		self.wall_list.draw(screen)
 		self.layer_list.add(player,layer=4)
 		self.layer_list.draw(screen)
+		#self.wall_list.draw(screen)
 		#self.npc_list.draw(screen)
 		self.layer_list.remove(player)
 
@@ -131,29 +158,38 @@ class Map():
 	def stop(self):
 		self.go = 0
 
+	def can_shift(self,player,list):
+		for item in list:
+			if player.collide_right(item)[0]:
+				self.shift_world(player.collide_right(item)[1])
+				self.go = 0
+				
+			elif player.collide_left(item)[0]:
+				self.shift_world(player.collide_left(item)[1])
+				self.go = 0
+				
+											
+	def char_y(self,entrance):
+		return self.player_y
+		
 	def shift_world(self, shift_x):
-		""" When the user moves left/right and we need to scroll everything: """
-
-		# Keep track of the shift amount
-		self.world_shift += shift_x
-
-		if shift_x > 0:
-			self.bg_shift += self.bg_shift_speed
-			self.back_image1.rect.x += self.back1_shift
-			self.back_image2.rect.x += self.back2_shift
-		elif shift_x < 0:
-			self.bg_shift += -self.bg_shift_speed
-			self.back_image1.rect.x += -self.back1_shift
-			self.back_image2.rect.x += -self.back2_shift
+	
+		""" When move the player space """
 		
 		self.ground.rect.x += shift_x
-			
+		self.back_wall.rect.x += shift_x
 		self.front_image.rect.x += shift_x
 
 		# Go through all the sprite lists and shift
 		for wall in self.wall_list:
 			wall.rect.x += shift_x
+		for object in self.object_list:
+			object.rect.x += shift_x
+		for npc in self.npc_list:
+			npc.rect.x += shift_x
+		
 
+		
 '''
 class Scene(object):
 	""" This is a generic super-class used to define a level.
@@ -240,8 +276,8 @@ if __name__ == "__main__":
 
 	player = Player(constants.SKUNK)
 
-	player.rect.x = constants.SCREEN_WIDTH/2 - player.rect.width/2
-	player.set_y(300)
+	player.set_x(305)
+	player.set_y(test_map.char_y(1))
 	done = False
 
 	clock = pygame.time.Clock()
@@ -263,12 +299,14 @@ if __name__ == "__main__":
 					player.go_up()
 				if event.key == pygame.K_DOWN:
 					player.go_down()
+				if event.key == pygame.K_m:
+					open_phone()
 
 			if event.type == pygame.KEYUP:
 				player.stop()
 				test_map.stop()
 
-		test_map.update()
+		test_map.update(player)
 		player.update()
 
 		test_map.draw(screen,player)

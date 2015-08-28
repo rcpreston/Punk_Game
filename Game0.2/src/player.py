@@ -2,6 +2,7 @@ import pygame
 import constants
 
 from spritesheet_functions import SpriteSheet
+from object_class import Thing
 
 class Player(pygame.sprite.Sprite):
 
@@ -23,7 +24,6 @@ class Player(pygame.sprite.Sprite):
 	
 	protagonist = 0
 	
-	level = None
 
 	def __init__(self, character):
 
@@ -34,8 +34,10 @@ class Player(pygame.sprite.Sprite):
 		
 		if character == constants.BEANIE:
 			self.protagonist = 1
+			self.coll_box = Thing((constants.BEANIE_FOL+"/coll_box.png",0,0,30,5))
 		elif character == constants.SKUNK:
 			self.protagonist = 2
+			self.coll_box = Thing((constants.SKUNK_FOL+"/coll_box.png",0,0,30,5))
 		
 		# Down facing walk sequence
 		image = sprite_sheet.get_image(0, 0, 30, 47)
@@ -143,6 +145,8 @@ class Player(pygame.sprite.Sprite):
 		
 		self.pos_x = self.rect.x
 		self.pos_y = self.rect.y
+		self.coll_box.rect.x = self.pos_x
+		self.coll_box.rect.y = self.pos_y+self.rect.height-5
 		
 	def update(self):
 		
@@ -151,6 +155,8 @@ class Player(pygame.sprite.Sprite):
 		if self.pos_y > 264-self.rect.height:
 			if self.pos_y < 434-self.rect.height:
 				self.rect.y += self.change_y
+				self.coll_box.rect.y += self.change_y
+				
 		if self.direction == "R" and self.change_y == 0:
 			if self.change_x == 1:
 				frame = (self.pos_x // constants.PLAYER_SPEED) % len(self.run_r)
@@ -210,6 +216,41 @@ class Player(pygame.sprite.Sprite):
 		""" Set the player y position """
 		self.rect.y = y
 		self.pos_y = y
+		self.coll_box.rect.y = self.pos_y+self.rect.height-5
+		
+	def set_x(self,x):
+		""" Set the player x position """
+		self.rect.x = x
+		self.pos_x = x
+		self.coll_box.rect.x = self.rect.x
 	
 	def who(self):
 		return self.protagonist
+	
+	def facing(self):
+		return self.direction
+		
+	def collide_up(self,wall):
+		if self.direction == "U" and self.coll_box.rect.colliderect(wall.rect):
+			self.coll_box.rect.top = wall.rect.bottom
+			self.rect.top = self.coll_box.rect.top - self.rect.height +5
+	def collide_down(self,wall):
+		if self.direction == "D" and self.coll_box.rect.colliderect(wall.rect):
+			self.coll_box.rect.bottom = wall.rect.top
+			self.rect.bottom = self.coll_box.rect.bottom
+	def collide_right(self,wall):
+		if self.direction !="R":
+			return (False,0)
+		elif self.coll_box.rect.colliderect(wall.rect):
+			x_shift = (self.coll_box.rect.right - wall.rect.left)
+			return (True,x_shift)
+		else:
+			return (False,0)
+	def collide_left(self,wall):
+		if self.direction != "L":
+			return (False,0)
+		elif self.coll_box.rect.colliderect(wall.rect):
+			x_shift = (self.coll_box.rect.left - wall.rect.right)
+			return (True,x_shift)
+		else:
+			return (False,0)

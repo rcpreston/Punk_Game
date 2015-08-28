@@ -20,9 +20,14 @@ O_SPEED = 2
 PLAYER_SPEED = 9
 
 # Character sheets
-SKUNK = "../res/Sprite/Skunk/skunksprite.png"
+# Skunk
+SKUNK_FOL = "../res/Sprite/Skunk"
+SKUNK = "../res/Sprite/Skunk/spritesheet.png"
 SKUNK_SELECT = (SKUNK, 30, 0, 30, 47)
-BEANIE = "../res/Sprite/Beanie/beaniesprite.png"
+
+# Beanie
+BEANIE_FOL = "../res/Sprite/Beanie"
+BEANIE = "../res/Sprite/Beanie/spritesheet.png"
 BEANIE_SELECT = (BEANIE, 30, 0, 30, 47)
 
 # Screen dimensions
