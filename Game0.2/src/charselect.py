@@ -1,10 +1,102 @@
 import pygame
 import constants
-import object_class
+from object_class import Thing
+import os
+from spritesheet_functions import get_frames
+from spritesheet_functions import animate_frame
 
 def CharSelect():
 	# Character Selection screen
+	pygame.init()
 	
+	size= [constants.SCREEN_WIDTH,constants.SCREEN_HEIGHT]
+	screen = pygame.display.set_mode(size)
+
+	pygame.display.set_caption("Punks R Us")
+	char_list = os.listdir('../res/Character')
+	sprite_list = pygame.sprite.Group()
+	
+	
+	done = False
+	
+	choice = 0
+	clock = pygame.time.Clock()
+	# Select the font to use, size, bold, italics
+	font = pygame.font.Font('../res/Phone/nokiafc22.ttf', 12)
+	count = 0
+	
+	while not done:
+		
+		for event in pygame.event.get(): # User did something
+			if event.type == pygame.QUIT: # If user clicked close
+				done = True # Flag that we are done so we exit this loop
+
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_RIGHT:
+					if choice == len(char_list)-1:
+						choice = 0
+					else:
+						choice +=1
+					count = 0
+				if event.key == pygame.K_LEFT:
+					if choice == 0:
+						choice = len(char_list)-1
+					else:
+						choice += -1
+					count = 0
+				if event.key == pygame.K_RETURN:
+					if select == 1:
+						choice = constants.BEANIE
+					else:
+						choice = constants.SKUNK
+					done = True
+		# Setup to display/"update"
+		count += 1
+		mug = Thing(("../res/Character/"+char_list[choice]+"/mug.png",0,0,150,194))
+		mug.rect.x = 0
+		mug.rect.y = 80
+		sprite = Thing(("../res/Character/"+char_list[choice]+"/spritesheet.png",30,0,30,47))
+		sprite.rect.y = 110
+		sprite.rect.x = 240
+		text_box = Thing(( "../res/Character/"+char_list[choice]+"/text_box.png",0,0,480,46))
+		text_box.rect.x = 0
+		text_box.rect.y = 480-47
+		
+		fight = get_frames("../res/Character/"+char_list[choice]+"/fightsheet.png",120,100,0,1020,0)
+		fight_pic = animate_frame(fight,1,count)
+		
+		text_file = open("../res/Character/"+char_list[choice]+"/char_select.txt","r")
+		lines = text_file.read().split('\n')
+		text_file.close()
+		
+		# Draw all yo shit
+		screen.fill(constants.BLACK)
+		text = font.render('<< Choose Your Player >>',True,constants.WHITE)
+		screen.blit(text, [constants.SCREEN_WIDTH/2-font.size('<< Choose Your Player >>')[0]/2, 30])
+		text = font.render(lines[0],True,constants.WHITE)
+		screen.blit(text, [360-font.size(lines[0])[0]/2,80])
+		sprite_list.add(mug)
+		sprite_list.add(sprite)
+		sprite_list.add(text_box)
+		sprite_list.draw(screen)
+		sprite_list.empty()
+		screen.blit(fight_pic, [290,110])
+		text = font.render(lines[1],True,constants.WHITE)
+		screen.blit(text, [constants.SCREEN_WIDTH/2-font.size(lines[1])[0]/2, 480-23-font.size(lines[1])[1]/2])
+		
+		# ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+
+		# Limit to 60 frames per second
+		clock.tick(60)
+
+		# Go ahead and update the screen with what we've drawn.
+		pygame.display.flip()
+		
+		
+		
+		
+
+	"""
 	# Things we need before loop
 	done = False
 	choice = constants.BEANIE
@@ -98,3 +190,8 @@ def CharSelect():
 		pygame.display.flip()
 
 	return choice
+	"""
+	
+if __name__ == "__main__":
+	CharSelect()
+	pygame.quit()

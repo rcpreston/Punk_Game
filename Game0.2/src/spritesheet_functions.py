@@ -33,3 +33,26 @@ class SpriteSheet(object):
 
         # Return the image
         return image
+
+def get_frames(sheet,width,height,start_x,end_x,y, flipped = False):
+	sprite_sheet = SpriteSheet(sheet)
+	frame_list = []
+	current_x = start_x
+	done = False
+	while not done:
+		image = sprite_sheet.get_image(current_x, y, width, height)
+		if flipped:
+			image = pygame.transform.flip(image, True, False)
+		frame_list.append(image)
+		current_x += width
+		if current_x >= end_x:
+			done = True
+	return frame_list
+	
+
+	
+	
+def animate_frame(frames,speed,count):
+	frame = (count // speed) % len(frames)
+	return frames[frame]
+	
