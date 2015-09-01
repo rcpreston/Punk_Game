@@ -30,6 +30,16 @@ BEANIE_FOL = "../res/Sprite/Beanie"
 BEANIE = "../res/Sprite/Beanie/spritesheet.png"
 BEANIE_SELECT = (BEANIE, 30, 0, 30, 47)
 
+# Fonts
+F1 = NOKIA = "../res/Fonts/nokiafc22.ttf"
+F2 = GRAFF1 = "../res/Fonts/Graffiti.ttf"
+F3 = GRAFF2 = "../res/Fonts/Graffogie.otf"
+F4 = GRAFF3 = "../res/Fonts/MARSNEVENEKSK.otf"
+F5 = GRAFF4 = "../res/Fonts/Mostwasted.ttf"
+F6 = GRAFF5 = "../res/Fonts/N!CE_Tag.ttf"
+F7 = GRAFF6 = "../res/Fonts/PaintCans_09_FREE.otf"
+
+
 # Screen dimensions
 SCREEN_WIDTH  = 640
 SCREEN_HEIGHT = 480
@@ -38,7 +48,7 @@ SCREEN_HEIGHT = 480
 PHONE_SCREEN = (188, 462, 18, 452, 274, 434)   # x left, x right, y top, y bottom, width, height
 PHONE_BG = "../res/Phone/background.png"
 PHONE_BACK = ("../res/Phone/return.png", 0, 20, 48, 20)
-PHONE_FONT = "../res/Phone/nokiafc22.ttf"
+PHONE_FONT = "../res/Fonts/nokiafc22.ttf"
 
 # Buffer edges
 RIGHT_BUFF = 500

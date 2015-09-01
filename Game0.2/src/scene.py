@@ -14,6 +14,7 @@ from phone_menu import open_phone
 # all npc data
 # all object data
 # all special event data
+# Script??
 
 class Scene():
 
