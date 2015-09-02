@@ -1,0 +1,13 @@
+# Map info formatting is as below:
+map_length,start_x,bg_x_shift,back1_x_shift,back2_x_shift,main_speed,player_start_y
+
+##
+Where:
+map_lenght= how long did you make your map? Height is stuck at 480
+start_x= starting x location of everything, with the assumption y is 0
+bg_x_shift= if the background moves, what speed? (put zero if no movement)
+back1_x_shift=if the furthest back image moves, what speed? (put zero if no movement)
+back2_x_shift=if the closer back image moves, what speed? (put zero if no movement)
+main_speed= speed of main movement area
+player_start_y= what y coordinate does the player's FEET start at on this map
+##

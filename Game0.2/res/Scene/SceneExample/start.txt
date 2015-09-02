@@ -1,0 +1,4 @@
+map
+player
+player x
+player y

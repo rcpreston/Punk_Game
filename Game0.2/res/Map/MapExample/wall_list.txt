@@ -1,0 +1,8 @@
+# list x point for each 5 pixel vertical line, list as it would be if map wasn't shifted
+xpoint,xpoint,xpoint
+xpoint,xpoint
+xpoint
+.
+.
+.
+xpoints for line 34
