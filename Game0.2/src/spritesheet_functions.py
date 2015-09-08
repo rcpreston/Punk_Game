@@ -38,12 +38,17 @@ def get_frames(sheet,width,height,start_x,num_frames,y, flipped = False):
 	sprite_sheet = SpriteSheet(sheet)
 	frame_list = []
 	i = 0
+	x_pos = start_x
+	if not flipped:
+		x_pos = start_x+width*(num_frames-1)
 	while i < num_frames:
-		image = sprite_sheet.get_image(start_x+i*width, y, width, height)
+		image = sprite_sheet.get_image(x_pos, y, width, height)
+		i += 1
+		x_pos = start_x+width*(num_frames-1-i)
 		if flipped:
 			image = pygame.transform.flip(image, True, False)
+			x_pos = start_x+i*width
 		frame_list.append(image)
-		i += 1
 	return frame_list
 	
 

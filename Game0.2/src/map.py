@@ -75,20 +75,20 @@ class Map():
 		self.back_image1 = Thing((self.map_folder+"/back_image1.png",0,0,map_length,480))
 		self.back_image2 = Thing((self.map_folder+"/back_image2.png",0,0,map_length,480))
 		
-		self.back_image1.rect.x = int(lines[3])
+		self.back_image1.rect.x = int(lines[1])
 		self.back_image1.rect.y = 0
-		self.back1_shift = int(lines[4])
-		self.back_image2.rect.x = int(lines[5])
+		self.back1_shift = int(lines[3])
+		self.back_image2.rect.x = int(lines[1])
 		self.back_image2.rect.y = 0
-		self.back2_shift = int(lines[6])
-		self.back_wall.rect.x = int(lines[7])
+		self.back2_shift = int(lines[4])
+		self.back_wall.rect.x = int(lines[1])
 		self.back_wall.rect.y = 0
-		self.ground.rect.x = int(lines[8])
+		self.ground.rect.x = int(lines[1])
 		self.ground.rect.y = 0
-		self.front_image.rect.x = int(lines[9])
+		self.front_image.rect.x = int(lines[1])
 		self.front_image.rect.y = 0
-		self.main_shift = int(lines[10])
-		self.player_y = int(lines[11])
+		self.main_shift = int(lines[5])
+		self.player_y = int(lines[6])
 		
 		self.layer_list.add(self.back_image1,layer=0)
 		self.layer_list.add(self.back_image2,layer=1)

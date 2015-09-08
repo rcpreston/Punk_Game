@@ -67,7 +67,9 @@ class Scene():
 		lines = text_file.read().split('\n')
 		text_file.close()
 		self.current_map = self.map_list[0]
-		self.player = Player(constants.SKUNK)
+		self.player = Player("../res/Character/"+lines[1])
+		self.player.set_y=self.current_map.char_y(1)
+		self.player.set_x=305
 
 
 	# Update everything on this level

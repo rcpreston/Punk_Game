@@ -22,20 +22,22 @@ class Player(pygame.sprite.Sprite):
 	
 	direction = "R"
 	
-	protagonist = 0
-	
 
-	def __init__(self, character):
+	def __init__(self, char_folder):
 
 		pygame.sprite.Sprite.__init__(self)
 		
-		
+		'''
 		if character == constants.BEANIE:
 			self.protagonist = 1
 			self.coll_box = Thing((constants.BEANIE_FOL+"/coll_box.png",0,0,30,5))
 		elif character == constants.SKUNK:
 			self.protagonist = 2
 			self.coll_box = Thing((constants.SKUNK_FOL+"/coll_box.png",0,0,30,5))
+		'''
+		self.protag_folder = char_folder
+		self.coll_box = Thing((char_folder+"/coll_box.png",0,0,30,5))
+		character = char_folder+"/spritesheet.png"
 		
 		# Down facing walk sequence
 		self.walk_d = get_frames(character,30,47,0,4,0)
@@ -120,6 +122,8 @@ class Player(pygame.sprite.Sprite):
 
 		# Set a referance to the image rect.
 		self.rect = self.image.get_rect()
+		self.rect.x = 320-self.rect.width/2
+		self.rect.y = 240-self.rect.height/2
 		
 		self.pos_x = self.rect.x
 		self.pos_y = self.rect.y
