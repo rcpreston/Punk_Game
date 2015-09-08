@@ -116,8 +116,10 @@ class Scene():
 						self.current_map.right()
 					if event.key == pygame.K_UP:
 						self.player.go_up()
+						self.current_map.stop()
 					if event.key == pygame.K_DOWN:
 						self.player.go_down()
+						self.current_map.stop()
 					if event.key == pygame.K_m:
 						open_phone()
 

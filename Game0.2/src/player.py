@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
 		self.walk_u = get_frames(character,30,47,0,4,94)
 		
 		# Left facing run sequence
-		self.run_l = get_frames(character,30,47,0,6,141)
+		self.run_l = get_frames(character,30,47,0,6,141,False,True)
 		'''
 		image = sprite_sheet.get_image(150, 141, 30, 47)
 		self.run_l.append(image)
@@ -69,7 +69,7 @@ class Player(pygame.sprite.Sprite):
 		'''
 
 		# Right facing run sequence
-		self.run_r = get_frames(character,30,47,0,6,141,True)
+		self.run_r = get_frames(character,30,47,0,6,141,True,True)
 		'''
 		image = sprite_sheet.get_image(0, 141, 30, 47)
 		image = pygame.transform.flip(image, True, False)
@@ -179,21 +179,25 @@ class Player(pygame.sprite.Sprite):
 	def go_left(self):
 		""" Called when the user hits the left arrow. """
 		self.change_x = -1
+		self.change_y = 0
 		self.direction = "L"
 
 	def go_right(self):
 		""" Called when the user hits the right arrow. """
 		self.change_x = 1
+		self.change_y = 0
 		self.direction = "R"
 	
 	def go_up(self):
 		""" Called when user hits the up arrow. """
 		self.change_y = -1
+		self.change_x = 0
 		self.direction = "U"
 	
 	def go_down(self):
 		""" Called when user hits the down arrow. """
 		self.change_y = 1
+		self.change_x = 0
 		self.direction = "D"
 	
 	def stop(self,dir):
