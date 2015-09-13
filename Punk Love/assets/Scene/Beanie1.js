@@ -1,4 +1,7 @@
-scene = [{
+[{
+	"num": ""
+},
+{
 	"name": "whatever",
 	"choices": 
 	[{
@@ -23,3 +26,19 @@ scene = [{
 	}]
 }
 ];
+[
+{
+	"num": ""
+},
+{
+	"name":""
+	"folder":"Map1"
+	"npc_num": "1"
+	"npc":[{
+		"name": "Bun"
+		"model": ""
+		"dialog": ""
+		"goesto": ""
+	}]
+}
+]
