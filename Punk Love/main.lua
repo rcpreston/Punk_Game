@@ -70,6 +70,10 @@ function love.update(dt)
 		charselectUpdate(dt)
 	elseif isSceneSelect then
 	    sceneselectUpdate(dt)
+	elseif isPlayScene then
+		playSceneUpdate(dt)			
+	elseif isShowMenu then
+		menuUpdate(dt)
 	end
 
 end
@@ -81,6 +85,10 @@ function love.draw(dt)
 		charselectDraw()
 	elseif isSceneSelect then
 	    sceneselectDraw()
+	elseif isPlayScene then
+		playSceneDraw()		
+	elseif isShowMenu then
+		menudraw()
 	end
 	animations.up:draw(image,100,200)
 	animations.down:draw(image, 130,200)
@@ -234,6 +242,12 @@ function sceneselectUpdate(dt)
 		isPlayScene = true
 		Scene = Character.scenelist[choice].File
 	end
+end
+
+function playSceneDraw()
+end
+
+function playSceneUpdate(dt)
 end
 
 
