@@ -3,10 +3,11 @@
         "char_num": "3"
     },
     {
-        "name": "Beanie",
+        "name": "Yamada Tarou",
         "age": "16",
         "gender": "Male",
         "model": "beaniesheet",
+        "face": "beaniemug.png",
         "select_line": "beanieline",
         "scenelist": [
         	{
@@ -33,10 +34,11 @@
         "sta_up": "1"
     },
     {
-        "name": "Bun",
+        "name": "Watanabe Hanako",
         "age": "16",
         "gender": "Female",
         "model": "bunsheet",
+        "face": "bunmug.png",
         "select_line": "bunline",
         "scenelist": [
         	{
@@ -63,10 +65,11 @@
         "sta_up": "1"
     },
     {
-        "name": "Skunk",
+        "name": "Gombei Nanashi",
         "age": "18",
         "gender": "Male",
         "model": "skunksheet",
+        "face": "skunkmug.png",
         "select_line": "skunkline",
         "scenelist": [
         	{

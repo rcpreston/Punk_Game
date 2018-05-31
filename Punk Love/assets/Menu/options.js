@@ -9,16 +9,13 @@
 		"num":"3"
 	},
 	{
-		"name": "Strengths",
-		"function":"stats"
+		"name": "Strengths"
 	},
 	{
-		"name": "Items",
-		"function":"inventory"
+		"name": "Items"
 	},
 	{
-		"name": "Preferences",
-		"function":"settings"
+		"name": "Preferences"
 	}]
 },
 {
@@ -50,15 +47,15 @@
 	},
 	{
 		"name": "Tetris",
-		"function": "tetris"
+		"function": ""
 	},
 	{
 		"name": "Snake",
-		"function": "snake"
+		"function": ""
 	},
 	{
 		"name": "Pong",
-		"function": "pong"
+		"function": ""
 	}]
 },
 {
